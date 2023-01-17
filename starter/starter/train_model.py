@@ -3,10 +3,10 @@
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
+import pickle
 import pandas as pd
 from ml.data import process_data
-from ml.model import train_model, get_sliced_preformance, inference
-import pickle
+from ml.model import train_model, get_sliced_preformance, inference, compute_model_metrics
 
 # Add code to load in the data.
 data = pd.read_csv("../data/census_cleaned.csv")
@@ -29,6 +29,9 @@ cat_features = [
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
+# Save encoder and binarizer
+pickle.dump(encoder, open("../encoder.sav", "wb"))
+pickle.dump(encoder, open("../lb.sav", "wb"))
 
 # Train and save a model.
 model = train_model(X_train, y_train)
@@ -46,4 +49,13 @@ X_test, y_test, _encoder, _lb = process_data(
     lb=lb,
 )
 y_pred = inference(model=model, X=X_test)
+
+# Calculate overall model performance
+precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
+print("-----------Overall model performance-----------")
+print(f"Precision: {precision}")
+print(f"Recall: {recall}")
+print(f"F-Beta: {fbeta}")
+
+# calculated sliced model performance
 get_sliced_preformance(test, label="salary", y_pred=y_pred, slice_cols=cat_features)
