@@ -8,6 +8,9 @@ from sklearn.ensemble import RandomForestClassifier
 from starter.ml.data import process_data
 
 
+root_path = os.path.dirname(os.path.abspath(__file__))
+
+
 @pytest.fixture(scope="session")
 def data():
     df = pd.DataFrame(np.random.randint(0, 400, size=(200, 4), ), columns=["A", "B", "C", "D"])
@@ -29,7 +32,7 @@ def model(data):
 @pytest.fixture(scope='session')
 def test_data(data):
     # Add code to load in the data.
-    data = pd.read_csv("../../data/census_cleaned.csv")
+    data = pd.read_csv(os.path.join(root_path, "starter/data/census_cleaned.csv"))
     cat_features = [
         "workclass",
         "education",
