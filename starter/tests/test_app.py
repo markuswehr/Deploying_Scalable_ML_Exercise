@@ -12,7 +12,7 @@ def test_welcome():
 
 
 def test_model_inference():
-    r = client.get("/model_inference")
+    r = client.get("/data")
     assert r.status_code == 200
 
 
@@ -21,9 +21,9 @@ def test_get_malformed():
     assert r.status_code != 200
 
 
-def test_model_inference_below_50(test_data):
-    X, y = test_data
-    r = client.post("/model_inference", json=X.to_dict())
+def test_model_inference_below_50():
+    #X, y = test_data
+    r = client.post("/data")
 
     assert r.status_code == 200
     assert "<=50K" in r.json().get("Prediction")

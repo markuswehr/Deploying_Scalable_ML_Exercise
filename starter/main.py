@@ -39,12 +39,11 @@ class CensusItem(BaseModel):
     hours_per_week: Optional[Union[int, list]] = Field([40, 40, 40, 40], alias="hours-per-week")
     native_country: Optional[Union[str, list]] = Field(["Germany", "Canada", "Portugal", "United-States"], alias="native-country")
 
-
 @app.get("/")
 async def welcome():
     return {"welcome_message": "Welcome to my app."}
 
-@app.post("/model_inference")
+@app.post("/{data}")
 async def model_inference(data: CensusItem):
     data_df = pd.DataFrame(data.dict(by_alias=True))
     encoder = pickle.load(open("encoder.sav", "rb"))
