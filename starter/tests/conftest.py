@@ -29,7 +29,7 @@ def model(data):
 @pytest.fixture(scope='session')
 def test_data(data):
     # Add code to load in the data.
-    data = pd.read_csv("../data/census_cleaned.csv")
+    data = pd.read_csv("../../data/census_cleaned.csv")
     cat_features = [
         "workclass",
         "education",
