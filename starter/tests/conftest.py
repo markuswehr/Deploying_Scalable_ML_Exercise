@@ -5,11 +5,13 @@ import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
 
+from starter.ml.data import process_data
+
 
 @pytest.fixture(scope="session")
 def data():
     df = pd.DataFrame(np.random.randint(0, 400, size=(200, 4), ), columns=["A", "B", "C", "D"])
-    df["y_true"] = np.random.randint(0, 2, size=(200,))
+    df["y_true"] = np.random.randint(2, size=(200,))
     y = df.pop("y_true")
     X = df
 
@@ -26,9 +28,21 @@ def model(data):
 
 @pytest.fixture(scope='session')
 def test_data(data):
-    X, y = data
+    # Add code to load in the data.
+    data = pd.read_csv("../data/census_cleaned.csv")
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+    # Proces the test data with the process_data function.
+    X, y, encoder, lb = process_data(
+        data, categorical_features=cat_features, label="salary", training=True
+    )
 
-    below_50 = X[X["salary"] == "<=50K"].iloc[0].drop("salary")
-    above_50 = X[X["salary"] == ">50K"].iloc[0].drop("salary")
-
-    return below_50, above_50
+    return X, y
