@@ -43,7 +43,7 @@ class CensusItem(BaseModel):
 async def welcome():
     return {"welcome_message": "Welcome to my app."}
 
-@app.post("/{data}")
+@app.post("/model_inference")
 async def model_inference(data: CensusItem):
     data_df = pd.DataFrame(data.dict(by_alias=True))
     encoder = pickle.load(open("encoder.sav", "rb"))
