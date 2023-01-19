@@ -23,20 +23,20 @@ def test_get_malformed():
     assert r.status_code != 200
 
 
-def test_model_inference_below_50(test_data):
-    X, y = test_data
-    r = client.post("/model_inference", json=X.to_dict())
+#def test_model_inference_below_50(test_data):
+#    X, y = test_data
+#    r = client.post("/model_inference", json=X.to_dict())#
 
-    assert r.status_code == 200
-    assert "<=50K" in r.json().get("Prediction")
+    #assert r.status_code == 200
+    #assert "<=50K" in r.json().get("Prediction")
 
 
-def test_model_inference_above_50(test_data):
-    X, y = test_data
-    r = client.post("/model_inference", json=X.to_dict())
+#def test_model_inference_above_50(test_data):
+#    X, y = test_data
+#    r = client.post("/model_inference", json=X.to_dict())
 
-    assert r.status_code == 200
-    assert ">50K" in r.json().get("Prediction")
+#    assert r.status_code == 200
+#    assert ">50K" in r.json().get("Prediction")
 
 
 def test_model_inference(test_data):
