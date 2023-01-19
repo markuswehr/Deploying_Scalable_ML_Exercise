@@ -32,13 +32,13 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 # Save encoder and binarizer
-pickle.dump(encoder, open(os.path.join(root_path, "../encoder.sav"), "wb"))
-pickle.dump(encoder, open(os.path.join(root_path, "../lb.sav"), "wb"))
+pickle.dump(encoder, open(os.path.join(root_path, "encoder.sav"), "wb"))
+pickle.dump(encoder, open(os.path.join(root_path, "lb.sav"), "wb"))
 
 # Train and save a model.
 model = train_model(X_train, y_train)
 # save the model to disk
-pickle.dump(model, open(os.path.join(root_path, "../final_model.sav"), "wb"))
+pickle.dump(model, open(os.path.join(root_path, "final_model.sav"), "wb"))
 
 # Output 
 X_test, y_test, _, _ = process_data(
