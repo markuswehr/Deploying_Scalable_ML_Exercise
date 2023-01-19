@@ -50,7 +50,7 @@ async def welcome():
 
 @app.post("/model_inference")
 async def model_inference(data: CensusItem):
-    data_df = pd.DataFrame.from_dict(data.dict(by_alias=True))
+    data_df = pd.DataFrame.from_dict([data.dict(by_alias=True)])
     X, _, _, _ = process_data(
         data_df,
         categorical_features=cat_features,
