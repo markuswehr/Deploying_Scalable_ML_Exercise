@@ -29,19 +29,21 @@ def model(data):
 
 @pytest.fixture(scope="session")
 def test_data():
-    return {
+    input_data = {
         "age": 30,
         "workclass": "Private",
         "fnlgt": 215646,
-        "education": "Masters",
-        "education_num": 13,
-        "marital_status": "Never-married",
-        "occupation": "Tech-support",
+        "education": "Master",
+        "education-num": 18,
+        "marital-status": "Never-married",
+        "occupation": "Tech-suppor",
         "relationship": "Not-in-family",
         "race": "White",
         "sex": "Male",
-        "capital_gain": 2174,
-        "capital_loss": 0,
-        "hours_per_week": 40,
-        "native_country": "Germany"
+        "capital-gain": 0,
+        "capital-loss": 0,
+        "hours-per-week": 40,
+        "native-country": "Germany"
     }
+
+    return input_data
