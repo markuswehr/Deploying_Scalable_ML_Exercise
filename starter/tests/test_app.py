@@ -1,5 +1,7 @@
 from fastapi.testclient import TestClient
 
+import json
+
 from main import app
 
 client = TestClient(app)
@@ -35,3 +37,10 @@ def test_model_inference_above_50(test_data):
 
     assert r.status_code == 200
     assert ">50K" in r.json().get("Prediction")
+
+
+def test_model_inference(test_data):
+    client = TestClient(app)
+    response = client.post("/model_inference", json=test_data)
+    assert response.status_code == 200
+    assert json.loads(response.text)["Prediction"] in ["<=50K", ">50k"]
