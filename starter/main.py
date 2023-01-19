@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
 import pickle
+import os
 import pandas as pd
 
 from starter.ml.model import inference
@@ -21,8 +22,9 @@ cat_features = [
     "native-country",
 ]
 
-model = pickle.load(open("starter/final_model.sav", "rb"))
-encoder = pickle.load(open("starter/encoder.sav", "rb"))
+root_path = os.path.dirname(os.path.abspath(__file__))
+model = pickle.load(open(os.path.join(root_path, "starter/final_model.sav"), "rb"))
+encoder = pickle.load(open(os.path.join(root_path, "starter/encoder.sav"), "rb"))
 
 app = FastAPI()
 
