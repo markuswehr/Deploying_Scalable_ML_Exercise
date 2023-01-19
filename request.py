@@ -19,6 +19,7 @@ input_data = {
 
 response = requests.post(
     "https://deploying-scalable-ml-exercise.herokuapp.com/model_inference",
-    json=input_data)
+    json=input_data
+)
 print(f'Response status code: {response.status_code}')
 print(f'Response body: {response.json()}')
