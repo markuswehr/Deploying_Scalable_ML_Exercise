@@ -45,20 +45,19 @@ async def welcome():
 
 @app.post("/model_inference")
 async def model_inference(data: CensusItem):
-    data_df = pd.DataFrame(data.dict(by_alias=True))
+    data_df = pd.DataFrame.from_dict(data.dict(by_alias=True))
     encoder = pickle.load(open("encoder.sav", "rb"))
-    lb = pickle.load(open("lb.sav", "rb"))
-    X, y, _encoder, _lb = process_data(
+    X, _, _, _ = process_data(
         data_df,
         categorical_features=cat_features,
-        label="salary",
+        label=None,
         training=False,
         encoder=encoder,
-        lb=lb,
+        lb=None,
     )
     model = pickle.load(open("final_model.sav", "rb"))
     pred = inference(model=model, X=X)
-    if pred == 0:
+    if pred[0] == 0:
         pred_label = "<=50K"
     else:
         pred_label = ">50K"

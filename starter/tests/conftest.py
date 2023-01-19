@@ -27,29 +27,6 @@ def model(data):
     return model
 
 
-#@pytest.fixture(scope='session')
-#def test_data(data, request):
-#    # Add code to load in the data.
-#   test_dir = os.path.dirname(request.module.__file__)
-#    data = pd.read_csv(os.path.join(test_dir, "../data/census_cleaned.csv"))
-#    cat_features = [
-#        "workclass",
-#        "education",
-#        "marital-status",
-#        "occupation",
-#        "relationship",
-#        "race",
-#        "sex",
-#        "native-country",
-#    ]
-#    # Proces the test data with the process_data function.
-#    X, y, encoder, lb = process_data(
-#        data, categorical_features=cat_features, label="salary", training=True
-#    )
-
-#    return X, y
-
-
 @pytest.fixture(scope="session")
 def test_data():
     return {

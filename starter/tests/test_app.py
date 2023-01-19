@@ -23,24 +23,8 @@ def test_get_malformed():
     assert r.status_code != 200
 
 
-#def test_model_inference_below_50(test_data):
-#    X, y = test_data
-#    r = client.post("/model_inference", json=X.to_dict())#
-
-    #assert r.status_code == 200
-    #assert "<=50K" in r.json().get("Prediction")
-
-
-#def test_model_inference_above_50(test_data):
-#    X, y = test_data
-#    r = client.post("/model_inference", json=X.to_dict())
-
-#    assert r.status_code == 200
-#    assert ">50K" in r.json().get("Prediction")
-
-
 def test_model_inference(test_data):
-    client = TestClient(app)
+    #client = TestClient(app)
     response = client.post("/model_inference", json=test_data)
     assert response.status_code == 200
-    assert json.loads(response.text)["Prediction"] in ["<=50K", ">50k"]
+    assert response.json()["Prediction"] in ["<=50K", ">50k"]
