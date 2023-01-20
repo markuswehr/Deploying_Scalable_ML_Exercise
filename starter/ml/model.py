@@ -1,6 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 import pickle
+import os
 
 
 # Optional: implement hyperparameter tuning.
@@ -23,6 +24,20 @@ def train_model(X_train, y_train):
     clf.fit(X_train, y_train)
 
     return clf
+
+
+def save_as_pkl(object, path):
+    """
+    """
+    pickle.dump(object, open(path, "wb"))
+
+
+def load_from_pkl(path):
+    """
+    """
+    object = pickle.load(path, "rb")
+
+    return object 
 
 
 def compute_model_metrics(y, preds):
@@ -67,19 +82,20 @@ def inference(model, X):
     return preds
 
 
-def get_sliced_preformance(data, label, y_pred, slice_cols):
+def get_sliced_preformance(data, label, y_pred, slice_cols, output_file_path):
     data["y_pred"] = y_pred
     label_category_0 = data[label].unique()[0]
     data["y_true"] = [0 if x==label_category_0 else 1 for x in data[label]]
-    for feature in slice_cols:
-        print(f"\n-------------{feature.upper()}-------------\n")
-        for category in data[feature].unique():
-            y_true = data[data[feature]==category]["y_true"]
-            y_pred = data[data[feature]==category]["y_pred"]
-            precision, recall, fbeta = compute_model_metrics(y_true, y_pred)
-            print("-------------------------------------------")
-            print(f"Category: {category}")
-            print("-------------------------------------------")
-            print(f"Precision: {precision}")
-            print(f"Recall: {recall}")
-            print(f"F-Beta: {fbeta}")
+    with open(output_file_path, "a") as f:
+        for feature in slice_cols:
+            print(f"\n-------------{feature.upper()}-------------\n", file=f)
+            for category in data[feature].unique():
+                y_true = data[data[feature]==category]["y_true"]
+                y_pred = data[data[feature]==category]["y_pred"]
+                precision, recall, fbeta = compute_model_metrics(y_true, y_pred)
+                print("-------------------------------------------", file=f)
+                print(f"Category: {category}", file=f)
+                print("-------------------------------------------", file=f)
+                print(f"Precision: {precision}", file=f)
+                print(f"Recall: {recall}", file=f)
+                print(f"F-Beta: {fbeta}", file=f)

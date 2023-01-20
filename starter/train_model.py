@@ -7,7 +7,7 @@ import pickle
 import os
 import pandas as pd
 from ml.data import process_data
-from ml.model import train_model, get_sliced_preformance, inference, compute_model_metrics
+from ml.model import train_model, save_as_pkl, load_from_pkl, get_sliced_preformance, inference, compute_model_metrics
 
 # Add code to load in the data.
 root_path = os.path.dirname(os.path.abspath(__file__))
@@ -32,13 +32,13 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 # Save encoder and binarizer
-pickle.dump(encoder, open(os.path.join(root_path, "encoder.sav"), "wb"))
-pickle.dump(encoder, open(os.path.join(root_path, "lb.sav"), "wb"))
+save_as_pkl(object=encoder, path="model/encoder.sav")
+save_as_pkl(object=lb, path="model/lb.sav")
 
 # Train and save a model.
 model = train_model(X_train, y_train)
 # save the model to disk
-pickle.dump(model, open(os.path.join(root_path, "final_model.sav"), "wb"))
+save_as_pkl(object=model, path="model/final_model.sav")
 
 # Output 
 X_test, y_test, _, _ = process_data(
@@ -59,4 +59,10 @@ print(f"Recall: {recall}")
 print(f"F-Beta: {fbeta}")
 
 # calculated sliced model performance
-get_sliced_preformance(test, label="salary", y_pred=y_pred, slice_cols=cat_features)
+get_sliced_preformance(
+    test,
+    label="salary",
+    y_pred=y_pred,
+    slice_cols=cat_features,
+    output_file_path=os.path.join(root_path, "../model/sliced_performance.txt")
+)

@@ -23,26 +23,47 @@ cat_features = [
 ]
 
 root_path = os.path.dirname(os.path.abspath(__file__))
-model = pickle.load(open(os.path.join(root_path, "starter/final_model.sav"), "rb"))
-encoder = pickle.load(open(os.path.join(root_path, "starter/encoder.sav"), "rb"))
+model = pickle.load(open(os.path.join(root_path, "model/final_model.sav"), "rb"))
+encoder = pickle.load(open(os.path.join(root_path, "model/encoder.sav"), "rb"))
 
 app = FastAPI()
 
 class CensusItem(BaseModel):
-    age: Optional[Union[int, list]] = [30, 30, 30, 30]
-    workclass: Optional[Union[str, list]] = ["Private", "Private", "Private", "Private"]
-    fnlgt: Optional[Union[int, list]] = [215646, 215646, 215646, 215646]
-    education: Optional[Union[str, list]] = ["Masters", "Masters", "Masters", "Masters"]
-    education_num: Optional[Union[int, list]] = Field([13, 13, 13, 13], alias="education-num")
-    marital_status: Optional[Union[str, list]] = Field(["Never-married", "Never-married", "Never-married", "Never-married"], alias="marital-status")
-    occupation: Optional[Union[str, list]] = ["Tech-support", "Tech-support", "Tech-support", "Tech-support"]
-    relationship: Optional[Union[str, list]] = ["Not-in-family", "Not-in-family", "Not-in-family", "Not-in-family"]
-    race: Optional[Union[str, list]] = ["White", "White", "White", "White"]
-    sex: Optional[Union[str, list]] = ["Male", "Male", "Male", "Male"]
-    capital_gain: Optional[Union[int, list]] = Field([2174, 2174, 2174, 2174], alias="capital-gain")
-    capital_loss: Optional[Union[int, list]] = Field([0, 0, 0, 0], alias="capital-loss")
-    hours_per_week: Optional[Union[int, list]] = Field([40, 40, 40, 40], alias="hours-per-week")
-    native_country: Optional[Union[str, list]] = Field(["Germany", "Canada", "Portugal", "United-States"], alias="native-country")
+    age: int = Field(default=30)
+    workclass: str = Field(default="Private")
+    fnlgt: int = Field(default=215646)
+    education: str = Field(default="Masters")
+    education_num: int = Field(default=18, alias="education-num")
+    marital_status: str = Field(default="Never-married", alias="marital-status")
+    occupation: str = Field(default="Tech-support")
+    relationship: str = Field(default="Not-in-family")
+    race: str = Field(default="White")
+    sex: str = Field(default="Male")
+    capital_gain: int = Field(default=2174, alias="capital-gain")
+    capital_loss: int = Field(default=0, alias="capital-loss")
+    hours_per_week: int = Field(default=40, alias="hours-per-week")
+    native_country: str = Field(default="Germany", alias="native-country")
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "age": 30,
+                "workclass": "Private",
+                "fnlgt": 215646,
+                "education": "Masters",
+                "education_num": "education-num",
+                "marital_status": "marital-status",
+                "occupation": "Tech-support",
+                "relationship": "Not-in-family",
+                "race": "White",
+                "sex": "Male",
+                "capital_gain": 2174,
+                "capital_loss": 0,
+                "hours_per_week": 40,
+                "native_country": "Germany",
+            }
+        }
+
 
 @app.get("/")
 async def welcome():

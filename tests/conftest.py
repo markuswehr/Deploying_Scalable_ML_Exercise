@@ -5,8 +5,6 @@ import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
 
-from starter.ml.data import process_data
-
 
 @pytest.fixture(scope="session")
 def data():
@@ -28,22 +26,44 @@ def model(data):
 
 
 @pytest.fixture(scope="session")
-def test_data():
+def test_data_above_50():
     input_data = {
-        "age": 30,
+        "age": 60,
         "workclass": "Private",
         "fnlgt": 215646,
         "education": "Master",
         "education-num": 18,
-        "marital-status": "Never-married",
-        "occupation": "Tech-suppor",
+        "marital-status": "Married-civ-spouse",
+        "occupation": "Exec-managerial",
+        "relationship": "Husband",
+        "race": "White",
+        "sex": "Male",
+        "capital-gain": 2174,
+        "capital-loss": 0,
+        "hours-per-week": 40,
+        "native-country": "United-States"
+    }
+
+    return input_data
+
+
+@pytest.fixture(scope="session")
+def test_data_below_50():
+    input_data = {
+        "age": 18,
+        "workclass": "Private",
+        "fnlgt": 215646,
+        "education": "HS-grad",
+        "education-num": 9,
+        "marital-status": "Divorced",
+        "occupation": "Handlers-cleaners",
         "relationship": "Not-in-family",
         "race": "White",
         "sex": "Male",
         "capital-gain": 0,
         "capital-loss": 0,
         "hours-per-week": 40,
-        "native-country": "Germany"
+        "native-country": "Cuba"
     }
 
     return input_data

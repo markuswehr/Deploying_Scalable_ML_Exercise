@@ -1,20 +1,20 @@
 import requests
 
 input_data = {
-    "age": 30,
+    "age": 50,
     "workclass": "Private",
     "fnlgt": 215646,
     "education": "Master",
     "education-num": 18,
     "marital-status": "Never-married",
-    "occupation": "Tech-suppor",
-    "relationship": "Not-in-family",
+    "occupation": "Exec-managerial",
+    "relationship": "Husband",
     "race": "White",
     "sex": "Male",
     "capital-gain": 0,
     "capital-loss": 0,
-    "hours-per-week": 40,
-    "native-country": "Germany"
+    "hours-per-week": 80,
+    "native-country": "United-States"
 }
 
 response = requests.post(

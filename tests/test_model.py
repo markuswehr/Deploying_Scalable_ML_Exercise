@@ -1,8 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier
 from starter.ml.model import train_model, inference, compute_model_metrics
 
-import pandas as pd
-
 
 def test_train_model(data):
     X, y = data
