@@ -28,12 +28,32 @@ def train_model(X_train, y_train):
 
 def save_as_pkl(object, path):
     """
+    Save object as pickle file (such as model, enoder, lb).
+
+    Inputs
+    ------
+    object : class
+        Object to be pickled.
+    path : str
+        Directory for saving pickle file.
+    Returns
+    -------
+
     """
     pickle.dump(object, open(path, "wb"))
 
 
 def load_from_pkl(path):
     """
+    Load pickled object.
+
+    Inputs
+    ------
+    path : str
+        Directory to the saved pickle file.
+    Returns
+    -------
+    object : class
     """
     object = pickle.load(path, "rb")
 
@@ -83,6 +103,25 @@ def inference(model, X):
 
 
 def get_sliced_preformance(data, label, y_pred, slice_cols, output_file_path):
+    """
+    Validates the trained machine learning model using precision, recall, and F1 on sliced data.
+
+    Inputs
+    ------
+    data : pd.DataFrame
+        Data frame with input data.
+    label : str
+        Target variable label.
+    y_pred: pd.Series
+        Predictions returned by model.
+    slice_cols: List[str]
+        List of column names to be used for performance calculation.
+    output_file_path: str
+        Path to store performance metrices at.
+    Returns
+    -------
+    
+    """
     data["y_pred"] = y_pred
     label_category_0 = data[label].unique()[0]
     data["y_true"] = [0 if x==label_category_0 else 1 for x in data[label]]
